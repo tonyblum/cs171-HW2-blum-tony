@@ -66,16 +66,16 @@ var graph = {nodes:[], links:[]};
 
 var nb_nodes = 100, nb_cat = 10;
 
+graph.nodes = 10;
 
 // for loop for the size of the input and then graph.nodes = data[0].commit
 
-
+/*
 
 graph.nodes = d3.range(nb_nodes).map(function() {  
   return { cat:Math.floor(nb_cat*Math.random()) }; 
 })
 
-/*
 graph.nodes.map(function(d, i) {
 
   graph.nodes.map(function(e, j) {
