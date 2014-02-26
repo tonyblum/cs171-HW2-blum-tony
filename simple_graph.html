@@ -54,21 +54,22 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	//console.log(data);
 	dataset = data;
 
-	//console.log(dataset);
+	console.log(dataset.length);
 
 	var graph = {nodes:[], links:[]};
 	 
-	var nb_nodes = 100, nb_cat = 10;
+	var nb_nodes = dataset.length, nb_cat = 10;
 
 	//console.log(graph.nodes);
 	graph.nodes = d3.range(nb_nodes).map(function() {  
-	  return [1000, 2, 5, 500];//return { cat:Math.floor(nb_cat*Math.random()) }; 
+	  return [dataset];//return { cat:Math.floor(nb_cat*Math.random()) }; 
 	})
 	console.log(graph);
 	console.log(graph.nodes);
-
-	// for loop for the size of the input and then graph.nodes = data[0].commit
-
+	
+	for (var i = 0; i< dataset.length; i++){
+	  console.log(dataset[i].parents);
+	}
 
 	/*
 	graph.nodes.map(function(d, i) {
@@ -81,8 +82,6 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	})
 
 	*/
-
-
 
 	// Generate the force layout
 	var force = d3.layout.force()
