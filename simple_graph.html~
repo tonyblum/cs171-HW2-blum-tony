@@ -64,6 +64,7 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	graph.nodes = d3.range(nb_nodes).map(function() {  
 	  return [dataset]; 
 	})
+	console.log(dataset);
 	console.log(graph);
 	console.log(graph.nodes);
 	
@@ -71,16 +72,21 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	for (var counter = 0; counter < dataset.length; counter++){
 	  console.log(dataset[counter].parents[0].sha);
 	  console.log(dataset[counter].sha);
-
-	  if (dataset[counter].parents[0].sha === dataset[counter].sha){
-		graph.nodes.map(function(d, i) {
-		   graph.nodes.map(function(e, j) {
-		     if(i!=j)
-		     graph.links.push({"source": i, "target": j}) // replace 
-		   })
-	      })
-	  }
 	}
+
+	graph.nodes.map(function(d, i) {
+	   graph.nodes.map(function(e, j) {
+		 console.log(d);
+	     if (i !=j && d.parents != null){
+			 for(var a = 0; a< d.parents.length; a++){ 
+				 if (d.parents[a].sha === e.sha)
+					 graph.links.push({"source": i, "target": j}); // replace
+			 } 
+	     }
+	   })
+    });
+
+	  
 
 
 	/*
