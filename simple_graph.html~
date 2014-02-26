@@ -62,30 +62,41 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 
 	//console.log(graph.nodes);
 	graph.nodes = d3.range(nb_nodes).map(function() {  
-	  return [dataset];//return { cat:Math.floor(nb_cat*Math.random()) }; 
+	  return [dataset]; 
 	})
 	console.log(graph);
 	console.log(graph.nodes);
 	
-	for (var i = 0; i< dataset.length; i++){
-	  console.log(dataset[i].parents);
+
+	for (var counter = 0; counter < dataset.length; counter++){
+	  console.log(dataset[counter].parents[0].sha);
+	  console.log(dataset[counter].sha);
+
+	  if (dataset[counter].parents[0].sha === dataset[counter].sha){
+		graph.nodes.map(function(d, i) {
+		   graph.nodes.map(function(e, j) {
+		     if(i!=j)
+		     graph.links.push({"source": i, "target": j}) // replace 
+		   })
+	      })
+	  }
 	}
-	// for loop for the size of the input and then graph.nodes = data[0].commit
 
 
 	/*
-	graph.nodes.map(function(d, i) {
-
-	  graph.nodes.map(function(e, j) {
-	    if(Math.random()>.99 && i!=j)
-		graph.links.push({"source": i, "target": j})
-
-	  })
-	})
-
+	for (var counter = 0; counter < dataset.length; counter++){
+	  console.log(dataset[counter].sha);
+	}
 	*/
 
+	// creates links
+	//for every node d
 
+	// for every counter 1, 2 in dataset.length, iterate through and establish a connection is every sha is in the parents of commit 2
+ 
+
+
+	
 
 	// Generate the force layout
 	var force = d3.layout.force()
