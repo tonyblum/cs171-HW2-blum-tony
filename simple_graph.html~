@@ -49,33 +49,27 @@ var svg = d3.select("body").append("svg")
 
 var fill = d3.scale.category10();
 
-var dataset;
-
-// d3.json(url[, callback])
+var dataset = "init";
 d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
-	 console.log(data);
-	/*data.text(test);
-	d3.select("body").selectAll("nodes");
-	.data(data)
-	.append("nodes");*/
+	//console.log(data);
+	dataset = data;
 
-	//var nodes = data[0].commit.author.name;
-	//console.log(nodes);
-	window.dataset = "etest";
-})
-console.log(dataset);
+	//console.log(dataset);
 
-var graph = {nodes:[], links:[]};
+	var graph = {nodes:[], links:[]};
+	 
+	var nb_nodes = 100, nb_cat = 10;
 
-var nb_nodes = 100, nb_cat = 10;
+	//console.log(graph.nodes);
+	graph.nodes = d3.range(nb_nodes).map(function() {  
+	  return [1000, 2, 5, 500];//return { cat:Math.floor(nb_cat*Math.random()) }; 
+	})
+console.log(graph);
+console.log(graph.nodes);
 
-graph.nodes = d3.range(nb_nodes).map(function() {  
-  return [1000, 2, 5, 500];//return { cat:Math.floor(nb_cat*Math.random()) }; 
 })
 
 // for loop for the size of the input and then graph.nodes = data[0].commit
-
-
 
 
 /*
