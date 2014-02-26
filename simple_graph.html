@@ -38,6 +38,11 @@
     <label><input type="radio" name="size" value="nosize" checked> None</label>
     <label><input type="radio" name="size" value="size_cat" > Category</label>
   </form>
+  <form>
+  Time Scale:
+    <label><input type="radio" name="size" value="index" checked> Index</label>
+    <label><input type="radio" name="size" value="time" > Time</label>
+  </form>
 <script>
 
 var width = 900,
@@ -59,16 +64,8 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	var graph = {nodes:[], links:[]};
 	 
 	var nb_nodes = dataset.length, nb_cat = 10;
-
-	//console.log(graph.nodes);
 	
 	graph.nodes = dataset;	
-
-	/*	
-	graph.nodes = d3.range(nb_nodes).map(function() {  
-	  return [dataset]; 
-	})
-	*/
 
 	console.log(dataset);
 	console.log(graph);
@@ -92,24 +89,6 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	   })
     });
 
-	  
-
-
-	/*
-	for (var counter = 0; counter < dataset.length; counter++){
-	  console.log(dataset[counter].sha);
-	}
-	*/
-
-	// creates links
-	//for every node d
-
-	// for every counter 1, 2 in dataset.length, iterate through and establish a connection is every sha is in the parents of commit 2
- 
-
-
-	
-
 	// Generate the force layout
 	var force = d3.layout.force()
 	    .size([width, height])
@@ -120,7 +99,6 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	    .on("end", function(d) {})
 
 	function tick(d) {
-
 	  graph_update(0);
 	}
 
@@ -134,6 +112,14 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	  })
 	  
 	  graph_update(500);
+	}
+
+	function time_layout() {
+		console.log("hello");
+	}
+
+	function index_layout() {
+		console.log("hello2");
 	}
 
 	function force_layout() {
@@ -218,6 +204,8 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	d3.select("input[value=\"line\"]").on("click", line_layout);
 	d3.select("input[value=\"line_cat\"]").on("click", line_cat_layout);
 	d3.select("input[value=\"radial\"]").on("click", radial_layout);
+	d3.select("input[value=\"time\"]").on("click", time_layout);
+	d3.select("input[value=\"index\"]").on("click", index_layout);
 
 	d3.select("input[value=\"nocolor\"]").on("click", function() {
 	  d3.selectAll("circle").transition().duration(500).style("fill", "#66CC66");
