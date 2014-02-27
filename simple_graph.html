@@ -139,7 +139,7 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	}
 	console.log(formatted);
 	var smallest = d3.min(formatted);
-	console.log(smallest);
+	var largest = d3.max(formatted);
 
 	function time_layout() {
 		console.log("hello2");
@@ -147,11 +147,21 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 		force.stop();
 
 		console.log("print min and max date");
+		console.log(smallest);
+		console.log(largest);
 		
-		//var x = d3.time.scale()
-		//		.domain()
+		
+		var x = d3.time.scale()
+			.domain([smallest, largest])
+			.range([100, width]);
+		
+		graph.nodes.forEach(function(d, i) {
+      		d.x = x(i);
+	   		d.y = height/2;
+	   	})
 
-		//var x_scale = d3.scale.linear().domain([1,dataset.length]).range([100, width]);
+		graph_update(500);
+		console.log("CALLED");
 	}
 
 
