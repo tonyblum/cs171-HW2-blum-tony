@@ -70,7 +70,6 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	console.log(dataset);
 	console.log(graph);
 	console.log(graph.nodes);
-	
 
 	for (var counter = 0; counter < dataset.length; counter++){
 	  console.log(dataset[counter].parents[0].sha);
@@ -99,28 +98,41 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	    .on("end", function(d) {})
 
 	function tick(d) {
-	  graph_update(0);
+		graph_update(0);
 	}
 
 	function random_layout() {
 	  
-	  force.stop();
-
-	  graph.nodes.forEach(function(d, i) {
-	    d.x = width/4 + 2*width*Math.random()/4;
-	    d.y = height/4 + 2*height*Math.random()/4;
-	  })
-	  
-	  graph_update(500);
+		force.stop();
+	
+		graph.nodes.forEach(function(d, i) {
+		    d.x = width/4 + 2*width*Math.random()/4;
+		    d.y = height/4 + 2*height*Math.random()/4;
+	})
+		graph_update(500);
 	}
 
 	function time_layout() {
 		console.log("hello");
+
+		var x_scale = d3.scale.linear().domain([1,30]).range([100, width]);
+
+		console.log(graph.nodes);
+
+		graph.nodes.forEach(function(d, i) {
+      		d.x = x_scale(i);
+	   		d.y = height/2;
+	    })
+		
+		graph_update(1000);
 	}
 
 	function index_layout() {
 		console.log("hello2");
 	}
+
+
+
 
 	function force_layout() {
 
