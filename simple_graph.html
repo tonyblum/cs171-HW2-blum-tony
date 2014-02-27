@@ -129,21 +129,17 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 		graph_update(500);
 	}
 	var dates = new Array();
+	var formatted = new Array();
 
+	var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ");		// source: 	
+	
 	for (var counter = 0; counter < dataset.length; counter++){
 		dates[counter] = dataset[counter].commit.author.date;
-		
-
-		var smallest = Math.min(dates);
-
-		var largest = Math.max(dates);
-	  //console.log(dataset[counter].sha);
+		formatted[counter] = format.parse(dates[counter]); // returns a Date
 	}
-	var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ");		// source: 	
-	var output = format.parse("2014-02-25T22:36:23Z"); // returns a Date
-	console.log(output);
-	console.log(dates);
-
+	console.log(formatted);
+	var smallest = Math.min(formatted);
+	var largest = Math.max(formatted);
 
 	function time_layout() {
 		console.log("hello2");
