@@ -112,23 +112,51 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 		graph_update(500);
 	}
 
-	function time_layout() {
+	function index_layout() {
 		console.log("hello");
+		
+		force.stop();		
 
-		var x_scale = d3.scale.linear().domain([1,30]).range([100, width]);
+		var x_scale = d3.scale.linear().domain([1,dataset.length]).range([100, width]);
 
 		console.log(graph.nodes);
 
 		graph.nodes.forEach(function(d, i) {
       		d.x = x_scale(i);
 	   		d.y = height/2;
-	    })
+	   	})
 		
-		graph_update(1000);
+		graph_update(500);
 	}
+	var dates = new Array();
 
-	function index_layout() {
+	for (var counter = 0; counter < dataset.length; counter++){
+		dates[counter] = dataset[counter].commit.author.date;
+		
+
+		var smallest = Math.min(dates);
+
+		var largest = Math.max(dates);
+	  //console.log(dataset[counter].sha);
+	}
+	var format = d3.time.format("%Y-%m-%dT%H:%m:%sZ");		// source: 	
+	var output = format.parse("2014-02-25T22:36:23Z"); // returns a Date
+	console.log(output);
+	console.log(dates);
+
+
+	function time_layout() {
 		console.log("hello2");
+
+		force.stop();
+
+		console.log("print min and max date");
+
+
+		//var x = d3.time.scale()
+		//		.domain()
+
+		//var x_scale = d3.scale.linear().domain([1,dataset.length]).range([100, width]);
 	}
 
 
