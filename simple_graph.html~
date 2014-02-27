@@ -145,25 +145,25 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 		console.log("hello2");
 
 		force.stop();
-
-		console.log("print min and max date");
-		console.log(smallest);
-		console.log(largest);
-		
 		
 		var x = d3.time.scale()
 			.domain([smallest, largest])
 			.range([100, width]);
+
+		console.log(graph.nodes);
+
+		var formatted_d = new Array;
 		
 		graph.nodes.forEach(function(d, i) {
-      		d.x = x(i);
+
+			// convert i to date form
+			formatted_d = format.parse(d.commit.author.date);
+			console.log(formatted_d);
+      		d.x = x(formatted_d);
 	   		d.y = height/2;
 	   	})
 
 		graph_update(500);
-		console.log("CALLED");
-
-		//var x_scale = d3.scale.linear().domain([1,dataset.length]).range([100, width]);
 	}
 
 
