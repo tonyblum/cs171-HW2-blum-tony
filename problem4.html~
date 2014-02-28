@@ -34,61 +34,110 @@ body {
 //var values = iput;//d3.range(1000).map(input);
 //var values = d3.range(1000).map(d3.random.bates(10));
 
-console.log(values);
+d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
+	dataset = data;
 
-var values = [0.5446119321743026, 0.3270256782183424, 0.4305921924300492, 0.5290748759172856, 0.3570533553836867, 0.540250514424406, 0.614024257636629, 0.47791564704384654, 0.2688571537146345, 0.4850765499519184, 0.5584706102265045, 0.4465580302523449, 0.4615915358066559, 0.5252645907690748, 0.5310957485809922, 0.3919024841161445, 0.48660907505545764, 0.4777947093360126, 0.5252844205591828, 0.5050235499395057, 0.44828407070599496, 0.4775032840901986, 0.4766512209083885, 0.4937694143736735, 0.431414711009711, 0.5813899722415954, 0.5192841309821233, 0.5294937829021364, 0.5541821173392236, 0.6103340073488652, 0.4361706127645448, 0.5044027166906744, 0.515601467108354, 0.32823471741285176, 0.45503551135770975, 0.4033089836128056, 0.6150985720101744, 0.5298357851803303, 0.6806737924693153, 0.5208593812771142, 0.5331370852421969, 0.4946060334565118, 0.45278878228273245, 0.4624627740588039, 0.5628650617785752, 0.677672429010272, 0.3848469770280644, 0.5064955138135702, 0.427333702519536, 0.3808678661705926, 0.5828041619854047, 0.4222631823038682, 0.42283098488114773, 0.384058093954809, 0.4704088726779446, 0.36077141382265837, 0.4240116053493693, 0.6307861676439643, 0.4889227981679142, 0.45371020450256766, 0.4144062178209424, 0.6685005573090166, 0.2879185739904642, 0.49816649449057876, 0.5311924521578476, 0.584381994092837, 0.46017038910649716, 0.4221788812661543, 0.4839116917923093, 0.3305711487075314, 0.5457927498035133, 0.49959674703422935, 0.6167573419632391, 0.4844171849312261, 0.5688270066399127, 0.5022311513544991, 0.5110348057234659, 0.541176864085719, 0.43181337001733483, 0.46684625060297547, 0.3681453671539202, 0.39964585003908726, 0.369328700308688, 0.32673301741015165, 0.407035100297071, 0.49859624591190366, 0.4577708420809358, 0.5298977148719132, 0.5126698213163763, 0.4603149296483025, 0.35547366689424964, 0.4722376304678619, 0.3562100510112941, 0.5393375677056611, 0.36511017568409443, 0.34637195656541736, 0.5547042040619999, 0.6469230708898976, 0.4571149850497022, 0.543085318547673]
+	console.log(dataset.length); 
 
-// A formatter for counts.
-var formatCount = d3.format(",.0f");
+	for (var counter = 0; counter < dataset.length; counter++){
+	  //console.log(dataset[counter].parents[0].sha);
+	  console.log(dataset[counter].commit.author.name);
+	}
+	
+	var names = new Array();
+	
+	for (var counter = 0; counter < dataset.length; counter++){
+		names[counter] = dataset[counter].commit.author.name;
+	}
+	
+	console.log(names.sort());
 
-var margin = {top: 10, right: 30, bottom: 30, left: 30},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+	var a = 0;
+	var b = 0;
+	var chart_input = new Array();
+	var i = 0;
+	// make an array containing each name that occurs
 
-var x = d3.scale.linear()
-    .domain([0, 1])
-    .range([0, width]);
+	for (var counter = 0; counter < names.length; counter++){
+		if (names[counter] !== names[counter+1]){
+			console.log(names[counter]);
+			chart_input[i] = names[counter];
+			i++;
+		}
+	}
 
-// Generate a histogram using twenty uniformly-spaced bins.
-var data = d3.layout.histogram()
-    .bins(x.ticks(20))
-    (values);
+	console.log(chart_input[i]);
+	// check if equal to that name
 
-var y = d3.scale.linear()
-    .domain([0, d3.max(data, function(d) { return d.y; })])
-    .range([height, 0]);
+	for (var counter = 0; counter < names.length; counter++){
+		if (names[counter] === names[counter + 1]){
+			a ++;	
+		}
+		else {
+			break;
+		}
+	}
+	names[0] = a;
+	console.log(names[0]);
+	// add commit date
+	
+	// set values equal to the count of each name
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+	var values = [0.5446119321743026, 0.3270256782183424, 0.4305921924300492, 0.5290748759172856, 0.3570533553836867, 0.540250514424406, 0.614024257636629, 0.47791564704384654, 0.2688571537146345, 0.4850765499519184, 0.5584706102265045, 0.4465580302523449, 0.4615915358066559, 0.5252645907690748, 0.5310957485809922, 0.3919024841161445, 0.48660907505545764, 0.4777947093360126, 0.5252844205591828, 0.5050235499395057, 0.44828407070599496, 0.4775032840901986, 0.4766512209083885, 0.4937694143736735, 0.431414711009711, 0.5813899722415954, 0.5192841309821233, 0.5294937829021364, 0.5541821173392236, 0.6103340073488652, 0.4361706127645448, 0.5044027166906744, 0.515601467108354, 0.32823471741285176, 0.45503551135770975, 0.4033089836128056, 0.6150985720101744, 0.5298357851803303, 0.6806737924693153, 0.5208593812771142, 0.5331370852421969, 0.4946060334565118, 0.45278878228273245, 0.4624627740588039, 0.5628650617785752, 0.677672429010272, 0.3848469770280644, 0.5064955138135702, 0.427333702519536, 0.3808678661705926, 0.5828041619854047, 0.4222631823038682, 0.42283098488114773, 0.384058093954809, 0.4704088726779446, 0.36077141382265837, 0.4240116053493693, 0.6307861676439643, 0.4889227981679142, 0.45371020450256766, 0.4144062178209424, 0.6685005573090166, 0.2879185739904642, 0.49816649449057876, 0.5311924521578476, 0.584381994092837, 0.46017038910649716, 0.4221788812661543, 0.4839116917923093, 0.3305711487075314, 0.5457927498035133, 0.49959674703422935, 0.6167573419632391, 0.4844171849312261, 0.5688270066399127, 0.5022311513544991, 0.5110348057234659, 0.541176864085719, 0.43181337001733483, 0.46684625060297547, 0.3681453671539202, 0.39964585003908726, 0.369328700308688, 0.32673301741015165, 0.407035100297071, 0.49859624591190366, 0.4577708420809358, 0.5298977148719132, 0.5126698213163763, 0.4603149296483025, 0.35547366689424964, 0.4722376304678619, 0.3562100510112941, 0.5393375677056611, 0.36511017568409443, 0.34637195656541736, 0.5547042040619999, 0.6469230708898976, 0.4571149850497022, 0.543085318547673]
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	console.log(values);
 
-var bar = svg.selectAll(".bar")
-    .data(data)
-  .enter().append("g")
-    .attr("class", "bar")
-    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+	// A formatter for counts.
+	var formatCount = d3.format(",.0f");
 
-bar.append("rect")
-    .attr("x", 1)
-    .attr("width", x(data[0].dx) - 1)
-    .attr("height", function(d) { return height - y(d.y); });
+	var margin = {top: 10, right: 30, bottom: 30, left: 30},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
 
-bar.append("text")
-    .attr("dy", ".75em")
-    .attr("y", 6)
-    .attr("x", x(data[0].dx) / 2)
-    .attr("text-anchor", "middle")
-    .text(function(d) { return formatCount(d.y); });
+	var x = d3.scale.linear()
+	    .domain([0, 1])
+	    .range([0, width]);
 
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
+	// Generate a histogram using twenty uniformly-spaced bins.
+	var data = d3.layout.histogram()
+	    .bins(x.ticks(20))
+	    (values);
 
+	var y = d3.scale.linear()
+	    .domain([0, d3.max(data, function(d) { return d.y; })])
+	    .range([height, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+	var svg = d3.select("body").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var bar = svg.selectAll(".bar")
+	    .data(data)
+	  .enter().append("g")
+	    .attr("class", "bar")
+	    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+	bar.append("rect")
+	    .attr("x", 1)
+	    .attr("width", x(data[0].dx) - 1)
+	    .attr("height", function(d) { return height - y(d.y); });
+
+	bar.append("text")
+	    .attr("dy", ".75em")
+	    .attr("y", 6)
+	    .attr("x", x(data[0].dx) / 2)
+	    .attr("text-anchor", "middle")
+	    .text(function(d) { return formatCount(d.y); });
+
+	svg.append("g")
+	    .attr("class", "x axis")
+	    .attr("transform", "translate(0," + height + ")")
+	    .call(xAxis);
+})
 </script>
