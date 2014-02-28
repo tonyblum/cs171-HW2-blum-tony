@@ -61,9 +61,9 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	console.log(dataset.length);
 
 	var graph = {nodes:[], links:[]};
-	 
+
 	var nb_nodes = dataset.length, nb_cat = 10;
-	
+
 	graph.nodes = dataset;	
 
 	console.log(dataset);
@@ -101,9 +101,9 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	}
 
 	function random_layout() {
-		
+
 		force.stop();
-	
+
 		graph.nodes.forEach(function(d, i) {
 		    d.x = width/4 + 2*width*Math.random()/4;
 		    d.y = height/4 + 2*height*Math.random()/4;
@@ -113,7 +113,7 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 
 	function index_layout() {
 		console.log("hello");
-		
+
 		force.stop();		
 
 		var x_scale = d3.scale.linear().domain([1,dataset.length]).range([100, width]);
@@ -124,15 +124,15 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
       		d.x = x_scale(i);
 	   		d.y = height/2;
 	   	})
-		
+
 		graph_update(500);
 	}
-	
+
 	var dates = new Array();
 	var formatted = new Array();
 
 	var format = d3.time.format("%Y-%m-%dT%H:%M:%SZ"); 	
-	
+
 	for (var counter = 0; counter < dataset.length; counter++){
 		dates[counter] = dataset[counter].commit.author.date;
 		formatted[counter] = format.parse(dates[counter]); // returns a Date
@@ -145,7 +145,7 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 		console.log("hello2");
 
 		force.stop();
-		
+
 		var x = d3.time.scale()
 			.domain([smallest, largest])
 			.range([100, width]);
@@ -153,7 +153,7 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 		console.log(graph.nodes);
 
 		var formatted_d = new Array;
-		
+
 		graph.nodes.forEach(function(d, i) {
 
 			// convert i to date form
@@ -188,6 +188,10 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 	    .attr("class", function(d) { return "link " + d.type; })
 	    .attr("marker-end", "url(#end)");
 	/* Done */
+
+	tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d; });	
+
+	svg.call(tip)
 
 	function force_layout() {
 
@@ -288,75 +292,47 @@ d3.json("https://api.github.com/repos/caleydo/caleydo/commits", function(data){
 
 	var link = svg.selectAll(".link")
 		        .data(graph.links)
-		      .enter().append("path")// changed from line to path
+		      .enter().append("line")// changed from line to path
 		        .attr("class", "link")
 			  .attr("marker-end", "url(#end)");
 
-	//line([{x:d.source.x, y:d.source.y}, {x:d.source.x, y:d.source.y+offset_y}, {x:d.target.x, y:d.target.y+offset_y}, {x:d.target.x, y:d.target})
 
-/*
-	// code from https://piazza.com/class/ho6118hjjnr6u6?cid=414
-	var offset_y = 5;
- 
-	// code for 2.8 but not working
+/* ***************************************************** */
+/*	Curved lines (2.8)
+	var data = [{source: {x: 10, y: 10}, target:{x: 300, y: 300}}];
+
 	var line = d3.svg.line()
-	.x(function (d) {return d.x;})
-	.y(function (d) {return d.y;})
-	.interpolate("linear");
+		      .x(function(d) { return d.x; })
+		      .y(function(d) { return d.y; })
+		      .interpolate("linear");
 
-	link.append("path")
-	.attr("d", function (d) {
-	return line([{
-		x: d.source.x,
-		y: d.source.y
-	}, {
-		x: d.source.x,
-		y: d.source.y + offset_y
-	}, {
-		x: d.target.x,
-		y: d.target.y + offset_y
-	}, {
-		x: d.target.x,
-		y: d.target.y
-	   }])
-	}); 
+	svg.append("path")
+		  .attr("d", line(d3.values(data[0])))
+		  .attr("stroke", "blue")
+		  .attr("stroke-width", 1)
+		  .attr("fill", "none");
+
+	var diagonal = d3.svg.diagonal() 
+		 .source(data[0].source)
+		 .target(data[0].target)
+
+	 svg.append("path")
+	     .attr("fill", "none")
+	     .attr("stroke", "steelblue")
+	     .attr("d", diagonal)
+
 */
+/* ***************************************************** */
+		var node = svg.selectAll(".node")
+				  .data(graph.nodes)
+				.enter()
+				  .append("g").attr("class", "node");
 
-var data = [{source: {x: 10, y: 10}, target:{x: 300, y: 300}}];
+		node.append("circle")
+		    .attr("r", 5)
 
-var line = d3.svg.line()
-            .x(function(d) { return d.x; })
-            .y(function(d) { return d.y; })
-            .interpolate("linear");
-
-svg.append("path")
-        .attr("d", line(d3.values(data[0])))
-        .attr("stroke", "blue")
-        .attr("stroke-width", 1)
-        .attr("fill", "none");
-
-var diagonal = d3.svg.diagonal() 
-       .source(data[0].source)
-       .target(data[0].target)
-
- svg.append("path")
-     .attr("fill", "none")
-     .attr("stroke", "steelblue")
-     .attr("d", diagonal)
-
-
-
-
-	var node = svg.selectAll(".node")
-		        .data(graph.nodes)
-		      .enter()
-		        .append("g").attr("class", "node");
-
-	node.append("circle")
-	    .attr("r", 5)
-
-	force_layout();
-})
+		force_layout();
+	})
 </script>
 </body>
 </html>
