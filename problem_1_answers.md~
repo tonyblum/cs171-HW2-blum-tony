@@ -1,0 +1,13 @@
+Questions:
+
+Contributors is probably aimed at the general public, porduct managers, or anyone who would like to see who is working on a project.
+
+Commits activity is probably mainly an internal tool used by product managers to see how productive the team is being.
+
+Code frequency probably is useful to make sure that the codebase is being well maintained and is being trimmed as it grows.
+It is likely useful for product managers.
+
+Punch card is also likely used by product managers to help see what days the team was most productive.
+
+Pulse is likely useful for product managers and the general public to understand who has
+had the most commits which is perhaps correlated with bug fixes or productivity.

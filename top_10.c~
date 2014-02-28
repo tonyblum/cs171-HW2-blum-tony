@@ -1,0 +1,4 @@
+// given a list of 1000 ints find the top 10
+
+// sort the list find the numbers in the last 10 index
+// correct solution, 
