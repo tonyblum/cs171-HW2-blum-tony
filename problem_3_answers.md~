@@ -7,4 +7,6 @@ These 3 repositories are much bigger with many more commits and many more author
 
 This would cause the graph to appear busier and more difficult to read.
 
- 
+One way to improve my visualization to address these issues would be to add some componenet of scale
+so for instance if there are more than 10 commitors, only the 10 largest commitors are shown. Similarly,
+only the 10 branches with the most accepted contributions might also be shown. 

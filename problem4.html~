@@ -21,6 +21,9 @@ body {
   shape-rendering: crispEdges;
 }
 
+.bar:hover {
+  fill: brown;
+}
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -59,6 +62,9 @@ d3.json("https://api.github.com/repos/twbs/bootstrap/commits?per_page=100", func
 	var e = 0;
 	var f = 0;
 	var g = 0;
+	var h = 0;
+	var i = 0;
+	var j = 0;
 	var name_count = new Array();
 	var chart_input = new Array();
 	var i = 0;
@@ -79,25 +85,43 @@ d3.json("https://api.github.com/repos/twbs/bootstrap/commits?per_page=100", func
 		if (names[counter] === name_count[0]){
 			a ++;	
 		}
-		else if (names[counter] === name_count[1]){
+		if (names[counter] === name_count[1]){
 			b ++;		
 		}
-		else if (names[counter] === name_count[1]){
+		if (names[counter] === name_count[2]){
 			c ++;		
 		}
-		else if (names[counter] === name_count[1]){
+		if (names[counter] === name_count[3]){
 			d ++;		
 		}
-		else if (names[counter] === name_count[1]){
+		if (names[counter] === name_count[4]){
 			e ++;		
 		}
-		else if (names[counter] === name_count[1]){
+		if (names[counter] === name_count[5]){
 			f ++;		
 		}
-		else if (names[counter] === name_count[1]){
+		if (names[counter] === name_count[6]){
 			g ++;		
 		}
+		if (names[counter] === name_count[7]){
+			h ++;		
+		}
+		if (names[counter] === name_count[8]){
+			i ++;		
+		}
+		if (names[counter] === name_count[9]){
+			j ++;		
+		}
 	}
+	console.log(a);
+	console.log(b);
+	console.log(c);
+	console.log(d);
+	console.log(e);
+	console.log(f);
+	console.log(g);
+	
+
 	chart_input[0] = a;
 	chart_input[1] = b;
 	chart_input[2] = c;
@@ -105,7 +129,11 @@ d3.json("https://api.github.com/repos/twbs/bootstrap/commits?per_page=100", func
 	chart_input[4] = e;
 	chart_input[5] = f;
 	chart_input[6] = g;
+	chart_input[7] = h;
+	chart_input[8] = i;
+	chart_input[9] = j;
 	console.log(name_count);
+	console.log(chart_input);
 
 	
 	// add commit date
@@ -124,7 +152,7 @@ d3.json("https://api.github.com/repos/twbs/bootstrap/commits?per_page=100", func
 	    height = 500 - margin.top - margin.bottom;
 
 	var x = d3.scale.linear()
-	    .domain([0, 100])
+	    .domain([0, 35])
 	    .range([0, width]);
 
 	// Generate a histogram using twenty uniformly-spaced bins.
