@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<title> Commit Frequency </title>
+<h1> Commit frequency of the last 100 commits to the Bootstrap Repo </h1>
+<h2> The x-axis represents the number of the last 100 commits which were by a specific author.
+	The y-axis represents the number of authors who have made this many commits 
+	(out of the last 10 commit authors). </h2>
 <style>
 
 body {
@@ -180,11 +185,37 @@ d3.json("https://api.github.com/repos/twbs/bootstrap/commits?per_page=100", func
 	    .attr("class", "bar")
 	    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 
+/*
+var div = svg.append("foreignObject")
+ .append("xhtml:div") 
+ .attr("id", "tooltip")
+ .attr("class", "hidden");
+*/
+
+var tooltip = d3.select("svg")
+	.append("div")
+	.style("position", "absolute")
+	.style("z-index", "10")
+	.style("visibility", "hidden")
+	.text("a simple tooltip");
+
 	bar.append("rect")
 	    .attr("x", 1)
 	    .attr("width", x(data[0].dx) - 1)
-	    .attr("height", function(d) { return height - y(d.y); });
+	    .attr("height", function(d) { return height - y(d.y); })
+	    .on("mouseover", function() {
+		//alert(name_count);
+		
+		return tooltip.style("visibility", "visible")});
+		alert(tooltip);
 
+		//3.select(this).enter().append("text")
+
+		//console.log("called")});
+		//d3.select(this).enter().append("text")
+            //.text(function(d) {return d.x;})
+            //.attr("x", function(d) {return x(d.x);});
+		console.log(tooltip);
 	bar.append("text")
 	    .attr("dy", ".75em")
 	    .attr("y", 6)
